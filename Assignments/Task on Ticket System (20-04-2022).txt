@@ -1,0 +1,264 @@
+//Name : Abhishek Palve
+//Tasks on Object Array Sorting
+//Date: 18-04-2022
+-----------------------------------------------------------------------------------------
+
+Task1:
+//Create a Ticket Management System (Modify the code taught) to display database 
+//in sorted manner according to the attributes "Ticket no.", "Price", "From",
+//"To", "Booked On", "Journey On"
+
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+class date
+{
+     int day, month,year;
+     public:
+          void setDate(int dd,int mm, int yy)
+          {
+               day=dd;
+               month=mm;
+               year=yy;
+          }
+          void showDate()
+          {
+               printf("      %02d/%02d/%04d",day,month,year);
+          }
+};
+
+class ticket
+{
+     int tno;
+     float price;
+     date booking_date,journey_date;
+     char from[10],to[10];
+     public:
+          void set_ticket( int n, float p, date bd, date jd, char* f, char* t)
+          {
+               tno=n;
+               price=p;
+               booking_date=bd;
+               journey_date=jd;
+               strcpy(from,f);
+               strcpy(to,t);
+
+          }
+          
+          void show_ticket(ticket t[],int n)
+          {
+               int i,j;
+               for(i=0;i<n;i++)
+               {
+                    printf("%10d",t[i].tno);
+                    printf("%10.2f",t[i].price);
+                    printf("%10s",t[i].from);
+                    printf("%10s",t[i].to);
+                    t[i].booking_date.showDate();
+                    t[i].journey_date.showDate();
+                    puts("");
+               }
+          }
+          void tno_sort(ticket t[],int n)
+          {
+               int i,j;
+               for(i=0;i<n-1;i++)
+               {
+                    for(j=i+1;j<n;j++)
+                    {
+                         if(t[i].tno>t[j].tno)
+                         {
+                              class ticket temp;
+                              temp=t[i];
+                              t[i]=t[j];
+                              t[j]=temp;
+                         }
+                    }   
+               }
+               show_ticket(t,n);
+          }
+
+          void price_sort(ticket t[],int n)
+          {
+               int i,j;
+               for(i=0;i<n-1;i++)
+               {
+                    for(j=i+1;j<n;j++)
+                    {
+                         if(t[i].price>t[j].price)
+                         {
+                              class ticket temp;
+                              temp=t[i];
+                              t[i]=t[j];
+                              t[j]=temp;
+                         }
+                    }   
+               }
+               show_ticket(t,n);
+          }
+     
+};
+
+
+
+main()
+{
+     date bd, jd;
+     int n;
+     printf("Enter how many tickets data needs to be entered: ");
+     scanf("%d",&n);
+     int i,j;
+     ticket* t = new ticket[n];
+     for(i=0;i<n;i++)
+     {
+          printf("*********Enter Details of ticket no %d*********\n",i+1);
+          int no;
+          printf("No : ");
+          scanf("%d",&no);
+          float p;
+          printf("Price: ");
+          scanf("%f",&p);
+          int dd,mm,yy;
+          printf("Booking Date : ");
+          scanf("%2d%*c%2d%*c%4d",&dd,&mm,&yy);
+          bd.setDate(dd,mm,yy);
+          printf("Journey Date : ");
+          fflush;
+          scanf("%2d%*c%2d%*c%4d",&dd,&mm,&yy);
+          jd.setDate(dd,mm,yy);
+          fflush;
+          char from[10];
+          printf("Boarding City : ");
+          fflush(stdin);
+          gets(from);
+          char to[10];
+          printf("Destntn. City : ");
+          fflush(stdin);
+          gets(to);
+          t[i].set_ticket( no, p, bd, jd, from, to);
+          fflush(stdin);
+ 
+     }
+     
+     int choice;
+     char ans;
+     do{
+          printf ("**********************Menu**********************\n1.Sort by 'Ticket Number'.\n2.Sort by 'Price'.\n3.Sort by 'From'.\n4.Sort by 'To'.\n5.Sort by 'Booking Date'.\n6.Sort by 'Journey Date'.\n#.Any other choice will display 'Raw Data'.\n\n");
+          printf("Enter any INTEGER according to above options : ");
+          scanf("%d",&choice);
+          puts("\n\t\t*********Database of Tickets*********\n");
+          printf("%10s%10s%10s%10s%15s%17s\n","Ticket no.", "Price", "From", "To", "Booked On", "Journey On");
+          switch (choice)
+          {
+          case 1: 
+               t[i].tno_sort(t,n);
+               break;
+          case 2: 
+               t[i].price_sort(t,n);
+               break;
+          case 3: 
+               printf("Sort By 'From' will be displayed here");
+               //t[i].from_sort(t,n);
+               break;
+          case 4: 
+               printf("Sort By 'To' will be displayed here");
+               //t[i].to_sort(t,n);
+               break;
+          case 5: 
+               printf("Sort By 'Booking Date' will be displayed here");
+               //t[i].bdate_sort(t,n);
+               break;
+          case 6: 
+               printf("Sort By 'Journey Date' will be displayed here");
+               //t[i].jdate_sort(t,n);
+               break;
+          default: 
+               t[i].show_ticket(t,n);
+               break;
+          }
+          printf("Do you want to display data in any other format? (Y/N) : ");
+          fflush(stdin);
+          scanf("%c",&ans);
+     }while(ans=='y'|| ans =='Y');          
+}
+/*
+OUTPUT:
+Enter how many tickets data needs to be entered: 3
+*********Enter Details of ticket no 1*********
+No : 2
+Price: 1
+Booking Date : 1.1.2000 
+Journey Date : 1.1.2000
+Boarding City : wer
+Destntn. City : ert
+*********Enter Details of ticket no 2*********
+No : 1
+Price: 5
+Booking Date : 1.2.2000
+Journey Date : 1.2.2000
+Boarding City : sdf
+Destntn. City : dfd
+*********Enter Details of ticket no 3*********
+No : 3
+Price: 3
+Booking Date : 3.2.2000
+Journey Date : 3.2.2000
+Boarding City : fgh   
+Destntn. City : ghj
+**********************Menu**********************
+1.Sort by 'Ticket Number'.
+2.Sort by 'Price'.
+3.Sort by 'From'.
+4.Sort by 'To'.
+5.Sort by 'Booking Date'.
+6.Sort by 'Journey Date'.
+#.Any other choice will display 'Raw Data'.
+
+Enter any INTEGER according to above options : 7
+
+                *********Database of Tickets*********
+
+Ticket no.     Price      From        To      Booked On       Journey On
+         2      1.00       wer       ert      01/01/2000      01/01/2000
+         1      5.00       sdf       dfd      01/02/2000      01/02/2000
+         3      3.00       fgh       ghj      03/02/2000      03/02/2000
+Do you want to display data in any other format? (Y/N) : y
+**********************Menu**********************
+1.Sort by 'Ticket Number'.
+2.Sort by 'Price'.
+3.Sort by 'From'.
+4.Sort by 'To'.
+5.Sort by 'Booking Date'.
+6.Sort by 'Journey Date'.
+#.Any other choice will display 'Raw Data'.
+
+Enter any INTEGER according to above options : 1
+
+                *********Database of Tickets*********
+
+Ticket no.     Price      From        To      Booked On       Journey On
+         1      5.00       sdf       dfd      01/02/2000      01/02/2000
+         2      1.00       wer       ert      01/01/2000      01/01/2000
+         3      3.00       fgh       ghj      03/02/2000      03/02/2000
+Do you want to display data in any other format? (Y/N) : Y
+**********************Menu**********************
+1.Sort by 'Ticket Number'.
+2.Sort by 'Price'.
+3.Sort by 'From'.
+4.Sort by 'To'.
+5.Sort by 'Booking Date'.
+6.Sort by 'Journey Date'.
+#.Any other choice will display 'Raw Data'.
+
+Enter any INTEGER according to above options : 2
+
+                *********Database of Tickets*********
+
+Ticket no.     Price      From        To      Booked On       Journey On
+         2      1.00       wer       ert      01/01/2000      01/01/2000
+         3      3.00       fgh       ghj      03/02/2000      03/02/2000
+         1      5.00       sdf       dfd      01/02/2000      01/02/2000
+Do you want to display data in any other format? (Y/N) : n
+D:\Placement Matrix\Practice Problems>
+*/
