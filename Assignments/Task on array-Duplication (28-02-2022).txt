@@ -1,0 +1,71 @@
+//Name : Abhishek Palve
+//Tasks on Array 
+//Date: 28-02-2022
+-----------------------------------------------------------------------------------------
+//Task 1: 
+//To remove the duplicate elements from a given array.
+//(Note : input should be taken from the user).
+
+#include<stdio.h>
+
+main()
+{
+     int arr[20], count=0, key, i,j, n,k;
+     printf("Enter no. of elements <=20 : ");
+     scanf("%d",&n);
+     for(i=0;i<n;i++)
+     {
+          printf("Enter element no. [%d] : ",i+1);
+          scanf("%d",&arr[i]);
+     }
+     printf("Initial array with duplication is  : [ ");
+     for(i=0;i<n;i++)
+     {
+          printf("%d",arr[i]);
+          if(i==n-1)
+               continue;
+          printf(", ");     
+     }
+     printf(" ]\n");
+     for(i=0;i<n;i++)
+     {    
+          for(j=i+1;j<n;j++)
+          {
+               if(arr[i]==arr[j])
+               {
+                    for(k=j;k<n;k++) 
+                         arr[k]=arr[k+1];
+                    n--; 
+                    j-=1;
+               }
+               
+          }
+          
+     }
+     printf("Given array without duplication is : [ ");
+     for(i=0;i<n;i++)
+     {
+          printf("%d",arr[i]);
+          if(i==n-1)
+               continue;
+          printf(", ");     
+     }
+     printf(" ]");
+
+}
+/*
+OUTPUT:
+Enter no. of elements <=20 : 10
+Enter element no. [1] : 1
+Enter element no. [2] : 1
+Enter element no. [3] : 1
+Enter element no. [4] : 1
+Enter element no. [5] : 2
+Enter element no. [6] : 2
+Enter element no. [7] : 2
+Enter element no. [8] : 3
+Enter element no. [9] : 4
+Enter element no. [10] : 5
+Initial array with duplication is  : [ 1, 1, 1, 1, 2, 2, 2, 3, 4, 5 ]
+Given array without duplication is : [ 1, 2, 3, 4, 5 ]
+*/
